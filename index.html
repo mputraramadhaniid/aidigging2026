@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google-site-verification" content="uhbSzW3kE3jYXoVJ7_Ft90V28Bwn568nXxbgBQ3Nemg" />
+    <meta name="description" content="AI Digging is a powerful AI assistant that helps you with research, data analysis, code generation, and more. Try it now!" />
+    <title>Ai Digging</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <link rel="icon" href="https://firebasestorage.googleapis.com/v0/b/renvonovel.appspot.com/o/20250316_191334.jpg?alt=media&token=afb5c73d-872f-4e27-ad76-13f4c2b4481a" type="image/png" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js"></script>
+    <script src="https://unpkg.com/mammoth@1.4.18/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+      onload="renderMathInElement(document.body, {
+            delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '\\[', right: '\\]', display: true},
+              {left: '\\(', right: '\\)', display: false}
+            ]
+          });"
+    ></script>
+  </head>
+  <body class="fade-in">
+    <div class="navbar">
+      <div class="navbar-left" style="margin: 0; display: flex; align-items: center; gap: 5px">
+        <button class="menu-btn" id="leftMenuBtn" aria-label="Toggle sidebar" style="font-size: 20px">&#9776;</button>
+        <div style="margin-left: 10px">
+          <div style="display: flex; flex-direction: column">
+            <p style="font-size: 20px; margin: 0; line-height: 1">Digging</p>
+            <div style="display: flex; align-items: center; gap: 5px">
+              <p style="font-size: 10px; margin: 0">Dibuat oleh</p>
+              <img src="images/made_icon_hitam.png" alt="developer" style="height: 22px" />
+              <p style="font-size: 10px; margin: 0">&</p>
+              <img src="images/google.png" alt="developer" style="height: 16px" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="navbar-right">
+        <img src="images/icons_write.png" alt="trash" class="trash" title="Delete chat" id="clearChatBtn" style="height: 20px; width: 20px" />
+      </div>
+    </div>
+
+    <div class="container">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header" style="padding-left: 8px; padding-right: 8px; margin-bottom: 10px">
+          <button class="menu-btn" id="nutupsidebar" aria-label="Toggle sidebar" style="font-size: 20px">&#9776;</button>
+
+          <button class="sidebar-icon-btn" id="searchBtn">
+            <span class="material-icons">search</span>
+          </button>
+        </div>
+
+        <button class="sidebar-action-btn" id="newChatBtn" style="margin: 0px">
+          <img src="images/icons_write.png" alt="New Chat" class="trash" title="New Chat" style="height: 18px; margin-left: 2px; width: 18px; filter: brightness(0) invert(1)" />
+          <span>Chat Baru</span>
+        </button>
+
+        <button class="sidebar-action-btn" id="jelajahideveloper" style="margin: 0px">
+          <span class="material-icons" style="font-size: 20px">apps</span>
+          <span>Jelajahi Developer</span>
+        </button>
+
+        <button class="sidebar-action-btn" id="pricing" style="margin: 0px">
+          <span class="material-icons" style="font-size: 20px">auto_awesome</span>
+          <div style="display: flex; flex-direction: column">
+            <span>Tingkatkan paket Anda</span>
+            <span class="sidebar-footer-text" style="margin-top: 2px; color: rgb(125, 125, 125)">Lebih banyak akses model...</span>
+          </div>
+        </button>
+
+        <button class="sidebar-action-btn" id="speakdigging" style="margin-top: 12px; margin-bottom: 0px">
+          <span class="material-icons" style="font-size: 20px">play_circle_outline</span>
+          <span>Speak Digging</span>
+        </button>
+
+        <button class="sidebar-action-btn" id="kebijakanprivasi" style="margin: 0px; margin-bottom: 8px">
+          <span class="material-icons" style="font-size: 20px">verified_user</span>
+          <span>Kebijakan & Privasi</span>
+        </button>
+
+        <h3 class="sidebar-heading" style="margin-top: 14px; margin-bottom: 0px">Terbaru</h3>
+        <div class="chat-history-list" id="chatHistoryList"></div>
+
+        <div class="user-profile-section" id="userProfileSection">
+          <img src="" alt="User Avatar" id="userProfilePic" class="profile-pic" />
+          <span id="userProfileName" class="profile-name">Nama Pengguna</span>
+          <span class="material-icons profile-options-icon" id="profileOptionsBtn">more_vert</span>
+
+          <div class="profile-menu" id="profileMenu">
+            <a href="#" class="profile-menu-item">
+              <span class="material-icons">settings</span>
+              Pengaturan
+            </a>
+            <button id="logoutBtn" class="profile-menu-item">
+              <span class="material-icons">logout</span>
+              Logout
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+      <section class="chat-container">
+        <header class="chat-header">
+          <button class="menu-btn" id="bukasidebar" aria-label="Toggle sidebar" style="font-size: 20px; display: none">&#9776;</button>
+
+          <div style="display: flex; flex-direction: column; align-items: flex-start; margin-left: 10px; justify-content: center">
+            <p style="font-size: 20px; margin: 0; line-height: 1">Digging</p>
+            <div style="margin: 0; display: flex; align-items: center; gap: 5px">
+              <p style="font-size: 10px; margin: 0">Dibuat oleh</p>
+              <img src="images/made_icon_hitam.png" alt="developer" style="height: 25px" />
+              <p style="font-size: 10px; margin: 0">&</p>
+              <img src="images/google.png" alt="developer" style="height: 16px" />
+            </div>
+          </div>
+
+          <div style="flex-grow: 1"></div>
+          <img src="images/icons_write.png" alt="trash" class="trash" title="Delete chat" id="clearChatBtnn" style="height: 20px; width: 20px" />
+        </header>
+
+        <div class="chat-box" id="chatBox">
+          <div class="containermenu" id="menufitur1">
+            <div id="emptyMessage" class="empty-message"></div>
+            <div class="info-awal-message"></div>
+            <div class="suggestion-options" id="menufiturawal">
+              <button id="menu1" style="display: none">
+                <img src="images/icons_analyze.png" alt="Reset" class="icon" />
+                Riset
+              </button>
+              <button id="menu2" style="display: none">
+                <img src="images/icons_graph.png" alt="Analiysiz" class="icon" />
+                Analisis
+              </button>
+              <button id="menu3" style="display: none">
+                <img src="images/icons_coding.png" alt="Code" class="icon" />
+                Code
+              </button>
+            </div>
+            <div class="suggestion-options" id="menufiturkedua">
+              <button id="menu4" style="display: none">
+                <span class="material-icons" style="color: black">mic</span>
+                Bicara Suara
+              </button>
+              <button id="menu5" style="display: none">
+                <img src="images/icons_jurn.png" alt="Jurnal" class="icon" />
+                Buat Jurnal
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <form class="input-container" id="chatForm">
+          <div id="preview" style="margin-bottom: 10px"></div>
+
+          <textarea id="chatInput" placeholder="Minta bantuan Dingging" rows="1" autocomplete="off" required></textarea>
+
+          <div class="input-bawah-send">
+            <img src="images/ic_attach_file_grey.png" class="upload-file" alt="Send" id="uploadbtn" />
+
+            <input type="file" id="fileInput" multiple accept="image/*, application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/msword" style="display: none" />
+
+            <button type="submit" aria-label="Send message">
+              <img src="images/up.png" alt="Send" style="width: 20px; height: 20px" />
+            </button>
+          </div>
+        </form>
+
+        <footer class="footer" style="color: rgb(179, 179, 179)">Digging dapat membuat kesalahan, jadi periksa kembali responsnya</footer>
+      </section>
+    </div>
+
+    <div id="welcomeBackOverlay" class="welcome-back-overlay dialog-overlay">
+      <div class="welcome-back-box">
+        <div class="welcome-back-header">
+          <h2>Selamat datang kembali!</h2>
+          <p>Masuk untuk melanjutkan percakapan Anda dan membuka semua fitur.</p>
+        </div>
+        <div class="welcome-back-actions">
+          <button id="signInBtn" class="btn-primary-dark">Masuk</button>
+
+          <button id="signUpFreeBtn" class="btn-secondary-dark">Daftar gratis</button>
+
+          <button id="stayLoggedOutBtn" class="btn-text-dark">Tetap keluar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog-overlay hidden" id="customDialogOverlay">
+      <div class="dialog-box">
+        <h3 class="dialog-title" id="dialogTitle">Konfirmasi Tindakan</h3>
+        <p class="dialog-message" id="dialogMessage">Apakah Anda yakin ingin melanjutkan?</p>
+        <div class="dialog-buttons">
+          <button class="btn btn-secondary" id="dialogCancelBtn">Batal</button>
+          <button class="btn btn-danger" id="dialogConfirmBtn">Hapus</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="js/scripts.js"></script>
+  </body>
+</html>

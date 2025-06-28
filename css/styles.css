@@ -1,0 +1,2277 @@
+/* CSS untuk custom scrollbar di seluruh halaman */
+::-webkit-scrollbar {
+  width: 10px; /* Lebar scrollbar vertikal */
+  height: 10px; /* Tinggi scrollbar horizontal */
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e1e; /* Warna track scrollbar */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #555; /* Warna handle scrollbar */
+  border-radius: 10px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #888; /* Warna handle saat hover */
+}
+
+/* Scroll smooth di seluruh halaman */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Reset & base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #007bff; /* Contoh: Biru cerah */
+  --danger-color: #dc3545; /* Contoh: Merah untuk hapus */
+  --dark-bg: #212121; /* Latar belakang gelap umum */
+  --light-text: #e0e0e0; /* Warna teks terang */
+  --border-color: #232323; /* Warna border default */
+  --border-radius-sm: 8px; /* Radius border kecil */
+  --border-radius-md: 12px; /* Radius border sedang */
+  --spacing-sm: 4px; /* Spasi kecil */
+  --spacing-md: 10px; /* Spasi sedang */
+}
+
+/* Background animasi gradasi hitam biru */
+@keyframes animatedGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(-45deg, #212121, #212121, #212121, #212121, #212121, #212121, #212121);
+  background-size: 500% 500%;
+  animation: animatedGradient 30s ease infinite;
+  color: #e0e0e0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.3s ease;
+}
+
+.fade-in {
+  animation: fadeInMain 1.5s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInMain {
+  to {
+    opacity: 1;
+  }
+}
+
+.copy-btn img {
+  vertical-align: middle;
+}
+
+.navbar {
+  display: none;
+  color: #fff;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+}
+
+/* GANTI ATURAN LAMA DENGAN YANG INI */
+.menu-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+
+  /* Pengaturan Ukuran Baru */
+  font-size: 1.6em; /* Ukuran untuk ikon ☰ di dalamnya */
+  width: 25px; /* Lebar area tombol */
+  height: 25px; /* Tinggi area tombol */
+  padding: 0; /* Hapus padding default agar ukuran presisi */
+
+  /* Trik untuk membuat ikon selalu di tengah tombol */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%; /* Membuatnya menjadi lingkaran, hapus jika ingin kotak */
+  transition: background-color 0.2s ease;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  height: calc(100vh - 50px);
+  overflow: hidden;
+}
+
+.sidebar h2,
+.sidebar p {
+  margin: 0 0 20px;
+  font-weight: 600;
+  color: #e0e0e0;
+}
+
+.chat-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.chat {
+  padding: 15px 12px;
+  border-bottom: 1px solid #ffffff;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, transform 0.2s ease; /* Tambahkan transisi */
+  color: #ddd;
+}
+
+.chat:hover {
+  background-color: #333;
+  transform: scale(1.02); /* Sedikit membesar saat hover */
+}
+
+#sidebar {
+  /* TIGA SYARAT UTAMA ADA DI SINI */
+  display: flex;
+  flex-direction: column;
+  /* atau 100% */
+
+  /* Properti lain untuk styling */
+  width: 260px;
+  padding: 8px;
+  background-color: #181818;
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.active {
+  display: block;
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Ganti blok .chat-container lama Anda dengan yang ini */
+
+.chat-container {
+  /* KUNCI #1: Menjadi 'kanvas' atau jangkar untuk .input-container */
+  position: relative;
+
+  /* KUNCI #2: Mengatur anak-anaknya (chat-box & input-container) dalam format kolom */
+  display: flex;
+  flex-direction: column;
+
+  /* KUNCI #3: Memastikan container mengisi sisa ruang yang tersedia */
+  width: 100%;
+  height: 100%; /* Lebih andal daripada 100vh jika html & body juga 100% */
+
+  /* Mencegah elemen 'absolute' di dalamnya meluber keluar */
+  overflow: hidden;
+
+  /* Gaya visual Anda */
+  color: #e0e0e0;
+  background-color: #212121; /* Contoh warna latar belakang */
+}
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  border-bottom: 0px solid #535353;
+}
+
+.chat-header p {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #e0e0e0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.chat-header img.icon {
+  width: 35px;
+  height: 35px;
+  margin-left: 6px;
+  filter: invert(1); /* White icon */
+}
+
+.chat-header img.trash {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  filter: grayscale(100%) invert(1);
+  transition: filter 0.2s ease;
+}
+
+.chat-header img.trash:hover {
+  filter: grayscale(50%) invert(1);
+}
+
+.chat-box {
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  width: 94%;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-height: 0; /* 🔑 penting agar scroll aktif dalam flex container */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 120px;
+}
+
+.chat-box::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+.containermenu {
+  flex: 1;
+  display: flex;
+  flex-direction: column; /* Ubah jadi vertikal */
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  height: 100%;
+}
+
+.empty-message {
+  color: #ffffff;
+  font-size: 28px;
+  padding: 0px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.info-awal-message {
+  color: #ffffff;
+  font-size: 2rem;
+  padding: 0px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.suggestion-options {
+  margin-top: 20px;
+  bottom: 1rem;
+  display: flex;
+  flex-direction: row; /* horizontal */
+  flex-wrap: wrap; /* pindah baris jika sempit */
+  gap: 1rem; /* jarak antar tombol */
+  align-items: center; /* vertikal tengah */
+  justify-content: center; /* bisa diganti center atau start */
+  padding: 0 1rem;
+  max-width: 100%;
+  box-sizing: border-box; /* agar padding tidak melebar */
+}
+
+.suggestion-options button {
+  display: flex; /* Tambahkan ini */
+  align-items: center; /* Vertikal tengah */
+  justify-content: center; /* Horizontal tengah */
+  gap: 0.5rem; /* Jarak antara ikon dan teks */
+  white-space: nowrap;
+  background-color: #ffffff; /* Warna tombol */
+  color: #000000;
+  border: none;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  border: 1px solid #d4d4d4;
+  box-shadow: 1px 2px 6px rgba(199, 194, 194, 0.1);
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.suggestion-options button:hover {
+  background-color: #a1a1a1;
+  transform: scale(1.05); /* sedikit membesar saat hover */
+}
+
+.suggestion-options .icon {
+  width: 25px;
+  height: 25px;
+}
+
+.message-container {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  width: 100%; /* Pastikan kontainer pesan mengambil lebar penuh */
+}
+
+.copy-btn {
+  background: none;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin-top: 4px;
+  transition: color 0.3s;
+  display: flex;
+  align-items: flex-start;
+}
+.copy-btn:hover {
+  color: #fff;
+}
+
+.profile-image {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 12px;
+  border: 1px solid #ffffff;
+}
+
+.message-content {
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+.username {
+  display: none;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #ccc;
+}
+
+.message {
+  padding: 8px;
+  border-radius: 14px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #e0e0e0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  transition: background-color 0.3s ease; /* Transisi halus untuk background */
+}
+
+.message-container.user {
+  flex-direction: row-reverse;
+}
+
+.message-container.user .profile-image {
+  margin-left: 12px;
+  margin-right: 0;
+}
+
+/* GANTI ATURAN LAMA DENGAN YANG INI */
+.message-container.user .message {
+  padding-top: 8px;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: #424141; /* Background diubah menjadi abu-abu */
+  color: #ffffff; /* Warna teks diubah menjadi putih agar terbaca */
+  border-radius: 20px 5px 20px 20px;
+}
+
+.message-container.bot {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  padding: 0px 0;
+  box-sizing: border-box;
+}
+
+.message-container.bot .message-content {
+  width: 100%; /* ✅ Biar isi melebar penuh */
+  max-width: 100%;
+}
+
+.message-container.bot .message {
+  width: 100%; /* ✅ Ini yang membuat isi merentang penuh */
+  max-width: 100%;
+  padding: 0px;
+  margin-bottom: 8px;
+  border-radius: 14px;
+  color: #f9f9f9;
+  box-sizing: border-box;
+}
+
+/* Di file CSS Anda */
+.message-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+}
+
+.message-content th,
+.message-content td {
+  padding: 8px;
+  border: 1px solid #555;
+  text-align: left;
+  color: #ddd; /* Warna teks */
+}
+
+.message-content thead tr {
+  background-color: #3a3a3a; /* Warna latar belakang header tabel */
+  color: #fff;
+}
+
+.message-content tbody tr {
+  background-color: #2a2a2a; /* Warna latar belakang baris data */
+}
+
+.message-content pre {
+  background-color: #1e1e1e;
+  font-family: "Source Code Pro", monospace;
+  font-size: 0.9em;
+  color: #d4d4d4;
+  padding: 12px;
+  overflow-x: auto;
+  border-radius: 8px;
+  margin: 8px 0;
+}
+
+.message-content .code-wrapper {
+  position: relative;
+  overflow: hidden; /* Penting untuk menyembunyikan scrollbar di dalam code-wrapper jika tidak diinginkan */
+  border-radius: 8px;
+}
+
+.message-content .code-wrapper .code-toolbar {
+  /* Gaya untuk toolbar copy di blok kode */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  background-color: #252526;
+  border-bottom: 1px solid #333;
+}
+
+.message-content .code-wrapper .code-toolbar .code-label {
+  color: #ccc;
+  font-weight: 600;
+  user-select: none;
+}
+
+.message-content .md-inline-code {
+  background-color: #333;
+  color: #66d9ef;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-family: "Source Code Pro", monospace;
+  font-size: 0.9em;
+}
+
+.code-wrapper {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 12px;
+  font-family: "Source Code Pro", monospace;
+  box-sizing: border-box;
+}
+
+.code-wrapper pre {
+  margin: 0;
+  padding: 12px;
+  overflow-x: auto;
+  white-space: pre-wrap; /* wrap jika sempit, bisa pakai 'pre' untuk horizontal scroll */
+  color: #d4d4d4;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.code-wrapper code .keyword {
+  color: #569cd6;
+}
+.code-wrapper code .string {
+  color: #ce9178;
+}
+.code-wrapper code .comment {
+  color: #6a9955;
+  font-style: italic;
+}
+.code-wrapper code .number {
+  color: #b5cea8;
+}
+.code-wrapper code .function {
+  color: #dcdcaa;
+}
+
+.md-heading {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.md-bold {
+  font-weight: 700;
+}
+
+.md-italic {
+  font-style: italic;
+}
+
+.md-inline-code {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  font-family: "Source Code Pro", monospace;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  display: inline-block; /* ✅ Supaya ukurannya pas */
+  width: fit-content; /* ✅ Agar panjang menyesuaikan isi */
+  max-width: 100%; /* ✅ Hindari melampaui batas */
+  white-space: nowrap; /* ✅ Jangan patah baris */
+  vertical-align: middle;
+}
+
+.md-hr {
+  border: none;
+  border-top: 1px solid #444;
+  margin: 12px 0;
+}
+
+.code-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  background-color: #000000; /* mirip ChatGPT */
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Inter", sans-serif;
+  user-select: none;
+  border-radius: 6px 6px 0 0;
+}
+
+.code-label {
+  color: #6b7280; /* abu-abu */
+}
+
+.code-copy-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.code-copy-btn:hover {
+  background-color: #e0e7ff;
+  color: #4338ca;
+}
+
+.code-copy-btn:focus {
+  outline: 2px solid #4338ca;
+  outline-offset: 2px;
+}
+
+.code-block {
+  background: #1e1e1e;
+  border-radius: 8px;
+  margin: 6px 0;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  border: 1px solid #444;
+}
+
+.code-header {
+  background: #2a2a2a;
+  color: #ccc;
+  padding: 8px 12px;
+  font-size: 0.85em;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #444;
+}
+
+.code-header .language {
+  font-weight: 600;
+  font-family: "Roboto Mono", monospace;
+}
+
+.code-header .copy-btn {
+  background: #444;
+  color: #ccc;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.75em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.code-header .copy-btn:hover {
+  background: #666;
+  color: #fff;
+}
+
+pre {
+  margin: 0;
+  padding: 12px;
+  overflow-x: auto;
+  color: #eee;
+}
+
+code {
+  font-family: "Roboto Mono", monospace;
+  font-size: 0.9em;
+  line-height: 1.5;
+  color: #eee;
+  display: block;
+  white-space: pre;
+}
+
+.text-segment {
+  margin: 8px 0;
+  line-height: 1.7;
+  color: #ccc;
+}
+
+/* [✅ PERBAIKAN FINAL] CSS untuk Input Container yang Melayang */
+
+.input-container {
+  /* KUNCI #2: Membuat elemen ini 'melayang' di dalam induknya yang 'relative' */
+  position: absolute;
+
+  /* Mengatur posisi di dasar 'kanvas' dengan sedikit jarak */
+  bottom: 34px;
+
+  /* Trik untuk centering horizontal di dalam induknya */
+  left: 50%;
+  transform: translateX(-50%);
+
+  /* Animasi saat posisinya diubah oleh JavaScript */
+  transition: bottom 0.25s ease-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), /* Bayangan tipis untuk atas/samping */ 0 12px 24px rgba(0, 0, 0, 0.4); /* Bayangan lebih menyebar dan gelap ke bawah */
+
+  /* Gaya visual Anda yang sudah bagus dipertahankan */
+  display: flex;
+  flex-direction: column;
+  width: 94%;
+  max-width: 700px;
+  padding: 2px 4px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: #212121;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  z-index: 20;
+}
+
+.input-container textarea {
+  flex: 1;
+  width: 100%;
+  padding: 4px 12px;
+  font-size: 16px;
+  font-family: "Roboto", Arial, sans-serif;
+  color: #eee;
+  background-color: transparent;
+  border: none;
+  border-radius: 14px;
+  outline: none;
+  resize: none;
+  overflow-y: auto;
+  min-height: 48px;
+  max-height: 120px;
+  line-height: 24px;
+  transition: all 0.3s ease;
+  box-shadow: none;
+}
+
+.input-container textarea:focus {
+  border-color: #666;
+}
+
+.input-container textarea::placeholder {
+  color: #888888;
+}
+
+.input-bawah-send {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-left: 0px;
+}
+
+.input-bawah-send button {
+  margin-right: 6px; /* Ganti dari margin-left ke margin-right */
+  margin-bottom: 6px;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Tengah dalam tombol */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Tambahkan transisi */
+  flex-shrink: 0;
+}
+
+#uploadbtn {
+  /* Ini adalah tombol utamanya (BUTTON) */
+  margin-left: 7px;
+  margin-bottom: 6px;
+  border-radius: 50%;
+  /* Gunakan border ini untuk tombol */
+  border: 1px solid #636363 !important; /* Abu-abu standar */
+  padding: 5px; /* Sesuaikan padding agar ikon di tengah lingkaran */
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center; /* Pusatkan ikon secara vertikal */
+  justify-content: center; /* Pusatkan ikon secara horizontal */
+  flex-shrink: 0;
+  background: transparent; /* Pastikan latar belakang tombol transparan jika ingin border terlihat */
+}
+
+.upload-file {
+  /* Ini adalah ikon gambar (IMG) di dalam tombol */
+  /* Hapus properti border dari sini */
+  /* margin-left: 7px; */ /* Margin ini sudah ditangani oleh tombolnya */
+  /* margin-bottom: 6px; */ /* Margin ini sudah ditangani oleh tombolnya */
+  /* border-radius: 50%; */ /* Tidak perlu border-radius di sini jika border ada di tombol */
+  border: none; /* Penting: Pastikan tidak ada border pada gambar */
+  padding: 0; /* Hapus padding jika border dan padding sudah di tombol */
+  cursor: pointer; /* Ditangani oleh tombol */
+  width: 20px; /* Sesuaikan ukuran ikon di dalamnya agar pas */
+  height: 20px; /* Sesuaikan ukuran ikon di dalamnya agar pas */
+  /* display: flex; */ /* Tidak perlu flexbox untuk img */
+  /* align-items: center; */ /* Tidak perlu flexbox untuk img */
+  /* justify-content: flex-start; */ /* Tidak perlu flexbox untuk img */
+  flex-shrink: 0;
+  /* Membuat ikon jadi putih */
+}
+
+/* Anda mungkin memiliki kelas .icon-btn di HTML juga, pastikan tidak ada konflik */
+/* Jika Anda menggunakan .icon-btn untuk #uploadbtn, Anda bisa terapkan gaya border di sana: */
+.icon-btn {
+  /* ... properti lain untuk tombol ikon Anda ... */
+  border: 1px solid #aaaaaa; /* Terapkan border di sini */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* ... */
+}
+
+/* Styling untuk Preview Gambar
+*/
+
+/* Styling untuk Preview Gambar di Bawah Input Area */
+
+/* ================================================= */
+/* == CSS UNTUK FITUR MULTI-UPLOAD GAMBAR == */
+/* ================================================= */
+
+/* Area pembungkus untuk semua pratinjau file di bawah input */
+#preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md); /* Spasi antar item pratinjau */
+  padding: var(--spacing-sm) var(--spacing-md); /* Padding di dalam area pratinjau */
+  align-items: center; /* Memastikan item vertikal sejajar */
+}
+
+/* Pembungkus individual untuk setiap item pratinjau (gambar atau dokumen) */
+.preview-item {
+  position: relative;
+  width: 75px; /* Lebar tetap untuk konsistensi */
+  height: 75px; /* Tinggi tetap untuk konsistensi */
+  animation: fadeIn 0.3s ease-out; /* Animasi muncul */
+  box-sizing: border-box; /* Pastikan padding/border tidak menambah ukuran */
+}
+
+/* Styling khusus untuk pratinjau gambar */
+.preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Memastikan gambar mengisi area tanpa terdistorsi */
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--border-color); /* Border tipis */
+}
+
+/* Styling khusus untuk pratinjau dokumen (PDF, DOCX) */
+.preview-item-doc {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: 8px 12px; /* Padding di dalam tag dokumen */
+  border-radius: 20px; /* Bentuk pil untuk dokumen */
+  color: var(--light-text);
+  height: 40px; /* Tinggi yang lebih terkontrol */
+  background-color: var(--dark-bg); /* Latar belakang gelap untuk dokumen */
+  border: 1px solid var(--border-color);
+  flex-shrink: 0; /* Mencegah item menyusut jika ruang terbatas */
+  width: auto; /* Biarkan lebar menyesuaikan konten */
+  max-width: 150px; /* Batasi lebar agar tidak terlalu panjang */
+  overflow: hidden; /* Sembunyikan jika nama file terlalu panjang */
+  text-overflow: ellipsis; /* Tampilkan ... jika terpotong */
+}
+
+.preview-item-doc .material-icons {
+  font-size: 20px;
+  /* Warna ikon bisa disesuaikan di JS, atau override di sini */
+}
+
+.preview-file-name {
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap; /* Mencegah nama file putus baris */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Tombol silang (X) untuk menghapus pratinjau (gambar & dokumen) */
+.preview-remove-btn {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  border: 1px solid white;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+  transition: all 0.2s ease;
+  z-index: 10; /* Pastikan di atas gambar/dokumen */
+}
+
+/* Penempatan tombol hapus untuk gambar */
+.preview-item:not(.preview-item-doc) .preview-remove-btn {
+  top: -8px;
+  right: -8px;
+}
+
+/* Penempatan tombol hapus untuk dokumen */
+.preview-item-doc .preview-remove-btn {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  right: 5px; /* Lebih dekat ke tepi kanan dokumen */
+  transform: translateY(-50%);
+  opacity: 0.8; /* Sedikit transparan */
+}
+
+.preview-remove-btn:hover {
+  background-color: var(--danger-color); /* Merah saat hover */
+  transform: scale(1.1);
+  border-color: var(--danger-color); /* Border juga merah saat hover */
+  opacity: 1;
+}
+
+/* Animasi fadeIn untuk item pratinjau */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ======================================= */
+/* ====== STYLING FILE DALAM CHAT ====== */
+/* ======================================= */
+
+/* Kontainer umum untuk semua jenis file di dalam pesan chat */
+/* Kontainer utama untuk file di dalam gelembung chat */
+.message-files-container {
+  margin-bottom: px; /* Jarak antara file dan teks */
+}
+
+/* Grid untuk menampilkan gambar */
+.message-image-grid {
+  display: grid;
+  gap: 5px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Mengatur jumlah kolom pada grid */
+.message-image-grid.grid-cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.message-image-grid.grid-cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.message-image-grid.grid-cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.message-image-grid img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: var(--border-radius-md); /* Radius lebih besar untuk gambar di chat */
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 2px solid rgba(255, 255, 255, 0.2); /* Border halus */
+}
+
+.message-image-grid img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Styling untuk tag dokumen di dalam pesan chat */
+.message-doc-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  padding: 0; /* Sedikit padding horizontal */
+}
+
+.message-doc-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: rgba(25, 118, 210, 0.7); /* Contoh: Biru tua transparan */
+  padding: 6px 12px;
+  margin-bottom: 4px;
+  border-radius: 12px; /* Bentuk pil */
+  font-size: 13px;
+  color: white;
+  border: 1px solid rgba(25, 118, 210, 0.9);
+  flex-shrink: 0; /* Mencegah tag menyusut */
+  max-width: 160px; /* Batasi lebar tag */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Sesuaikan warna latar belakang tag PDF */
+.message-doc-tag .material-icons[title="picture_as_pdf"] {
+  color: #ffebee; /* Warna ikon PDF */
+}
+.message-doc-tag[data-filetype="pdf"] {
+  /* Perlu atribut data-filetype di HTML */
+  background-color: rgba(211, 47, 47, 0.7); /* Merah tua transparan */
+  border-color: rgba(211, 47, 47, 0.9);
+}
+
+.message-doc-tag .material-icons {
+  font-size: 16px;
+}
+
+/* Penyesuaian untuk teks pesan agar ada jarak dari tag file */
+/* Ini harus diterapkan pada elemen yang berisi teks pesan itu sendiri */
+.message-content > div:not(.message-files-container) {
+  padding-top: var(--spacing-sm); /* Memberi jarak jika ada file di atasnya */
+}
+
+.input-container button:hover {
+  background-color: #6e6e6e;
+}
+
+.input-container button .material-icons {
+  font-size: 24px;
+  color: #fff;
+}
+
+.footer {
+  text-align: center;
+  font-size: 14px;
+  color: #888;
+  padding: 8px 0;
+  background-color: #212121; /* Hitam transparan */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px); /* Untuk Safari */
+  margin-top: 0px;
+  border-top: 0px solid #535353;
+}
+
+.loading-animation .dot {
+  animation: blink 1.5s infinite;
+  display: inline-block;
+  margin: 0 2px;
+  font-weight: bold;
+  font-size: 20px;
+  color: #888;
+}
+
+.loading-animation .dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.loading-animation .dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.typewriter {
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #ccc;
+  animation: typing 2s steps(var(--chars), end), blink-caret 0.75s step-end infinite;
+  font-family: monospace;
+  font-size: 16px;
+  color: #ddd;
+}
+
+/* GANTI CSS LAMA ANDA DENGAN YANG INI */
+
+/* Styling untuk Notifikasi Toast (Gaya Baru Sesuai Gambar) */
+.toast-notification {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f0f0f0; /* Warna abu-abu terang */
+  color: #212121; /* Warna teks gelap */
+  padding: 10px 20px;
+  border-radius: 8px; /* Sudut sedikit melengkung, tidak pil */
+  border: 1px solid #dcdcdc; /* Garis tepi tipis agar terlihat tegas */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Bayangan lebih halus */
+  z-index: 9999;
+  font-size: 14px;
+  font-weight: 400; /* Berat font normal */
+  opacity: 0;
+  transform: translate(-50%, 20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+}
+
+.toast-notification.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0.2;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #ccc;
+  }
+}
+
+/* PERUBAHAN: Tambahkan kelas baru di bawahnya */
+.chat-box.align-top {
+  justify-content: flex-start; /* Ini akan menumpuk pesan dari atas */
+}
+
+/* Tambahkan ini di file CSS Anda */
+.hilang-sepenuhnya {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* ===== PINDAHKAN SEMUA KODE INI KE FILE CSS ANDA ===== */
+
+/* Animasi Loading */
+.loading-animation {
+  display: flex;
+  align-items: center;
+  padding-top: 5px;
+  height: 20px;
+}
+.loading-animation .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #aaa;
+  margin: 0 3px;
+  animation: dot-pulse 1.4s infinite ease-in-out both;
+}
+.loading-animation .dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+.loading-animation .dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+@keyframes dot-pulse {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 2. Atur Elemen yang Bisa Tumbuh (Riwayat Chat) */
+.chat-history-list {
+  flex-grow: 1; /* Ambil semua ruang vertikal yang tersisa */
+  overflow-y: auto; /* Buat HANYA area ini yang bisa di-scroll */
+  min-height: 0; /* Perbaikan penting untuk flexbox agar tidak meluber */
+
+  /* Properti Anda yang lain */
+  margin-top: 10px;
+  padding-right: 5px;
+}
+
+.sidebar-header,
+.sidebar-action-btn,
+.sidebar-heading {
+  flex-shrink: 0;
+}
+.sidebar-chat-item {
+  width: 100%;
+  padding: 6px 15px;
+  margin-bottom: 5px;
+  background-color: transparent;
+  border: none;
+  color: #e0e0e0;
+  text-align: left;
+  border-radius: 90px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  position: relative; /* Untuk posisi tombol hapus */
+}
+.sidebar-chat-item:hover {
+  background-color: rgba(153, 153, 153, 0.2);
+}
+.sidebar-chat-item.active {
+  background-color: rgba(153, 153, 153, 0.2);
+  font-weight: bold;
+}
+.sidebar-chat-item .material-icons {
+  font-size: 20px;
+  color: #ffffff;
+}
+.sidebar-chat-item .chat-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+}
+.delete-chat-item {
+  background: none;
+  border: none;
+  color: #e0e0e0;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0; /* Sembunyi secara default */
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+.sidebar-chat-item:hover .delete-chat-item {
+  opacity: 0.7; /* Tampil saat hover */
+}
+.delete-chat-item:hover {
+  background-color: rgba(188, 188, 188, 0.3);
+  opacity: 1;
+}
+
+.typewriter {
+  overflow: hidden;
+  border-right: 0.15em solid #ccc;
+  white-space: nowrap;
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+.message.finished-typing {
+  border-right: none;
+  animation: none;
+  white-space: normal;
+}
+
+.segment-fade-in {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.3s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.code-header {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.copy-btn-code img {
+  filter: invert(20%) sepia(80%) saturate(200%) hue-rotate(170deg);
+  transition: filter 0.3s ease;
+}
+
+.copy-btn-code:hover img {
+  filter: invert(40%) sepia(100%) saturate(300%) hue-rotate(170deg);
+}
+
+/* Supaya sidebar fleksibel dan footer tetap paling bawah */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  padding: 4px 12px 4px 12px;
+  background-color: #181818; /* Diubah menjadi hitam solid */
+  /* backdrop-filter dan -webkit-backdrop-filter dihapus karena tidak lagi transparan */
+  border-right: 0px solid #535353;
+  width: 280px;
+  overflow: hidden;
+}
+
+/* --- Gaya Baru untuk Isi Sidebar --- */
+
+/* Kolom Pencarian */
+.sidebar-search {
+  display: flex;
+  align-items: center;
+  background-color: #2d2d2d;
+  border-radius: 90px;
+  padding: 10px 16px;
+  margin-bottom: 1rem;
+}
+
+.sidebar-search .search-icon {
+  color: #888;
+  margin-right: 10px;
+  font-size: 22px;
+}
+
+.sidebar-search input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #e0e0e0;
+  font-size: 14px;
+}
+
+.sidebar-search input::placeholder {
+  color: #888;
+}
+
+/* Tombol Aksi (Chat Baru & Jelajahi) */
+.sidebar-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Jarak antara ikon dan teks */
+  width: 100%;
+  background-color: transparent;
+  border: 0px solid #444;
+  color: #e0e0e0;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  border-radius: 90px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar-action-btn:hover {
+  background-color: #2d2d2d;
+  border-radius: 90px;
+}
+
+/* Garis Pemisah */
+.sidebar-divider {
+  border: none;
+  border-top: 0px solid #333;
+  margin: 12px 0;
+}
+
+/* Judul Section (Terbaru) */
+.sidebar-heading {
+  font-size: 12px;
+  font-weight: 600;
+  color: #888;
+  padding: 0 12px;
+  margin-bottom: 8px;
+  margin-top: 12px;
+}
+
+/* Container untuk header sidebar */
+.sidebar-header {
+  display: flex; /* Mengaktifkan Flexbox */
+  justify-content: space-between; /* Mendorong item ke ujung: satu ke kiri, satu ke kanan */
+  align-items: center; /* Menyejajarkan item secara vertikal di tengah */
+  height: 60px; /* Menetapkan tinggi standar untuk header */
+}
+
+/* Gaya umum untuk tombol ikon (close dan search) */
+.sidebar-icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #ffffff; /* Warna ikon standar Google */
+  padding: 8px; /* Membuat area klik lebih besar */
+  border-radius: 50%; /* Membuat efek hover melingkar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Atur ukuran font untuk semua ikon di dalam tombol ikon */
+.sidebar-icon-btn .material-icons {
+  font-size: 20px; /* <<< ATUR UKURAN YANG DIINGINKAN DI SINI */
+}
+
+/* Efek saat mouse diarahkan ke tombol ikon */
+.sidebar-icon-btn:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Untuk menyembunyikan kontainer search pada awalnya */
+.sidebar-search-container.hidden {
+  display: none;
+}
+
+/* Penyesuaian untuk Chat List & Footer */
+.chat-list {
+  flex-grow: 1; /* Biarkan daftar chat mengisi sisa ruang */
+  overflow-y: auto;
+  margin-bottom: 1rem;
+  padding-left: 0;
+}
+
+.sidebar-footer-text {
+  /* -- 3 JURUS AJAIB UNTUK MEMOTONG TEKS -- */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* -------------------------------------- */
+
+  /* (Opsional tapi direkomendasikan) 
+     Ini membantu flexbox agar bisa memotong teks dengan benar saat ruang terbatas */
+  min-width: 0;
+}
+
+/* ======================================================= */
+/* GAYA BARU UNTUK DIALOG KONFIRMASI (SESUAI GAMBAR)    */
+/* ======================================================= */
+
+/* Overlay Latar Belakang */
+/* Styling untuk latar belakang overlay */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Latar belakang semi-transparan */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Pastikan di atas elemen lain */
+
+  /* Transisi untuk efek fade-in */
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+/* Aturan untuk menyembunyikan dialog */
+.dialog-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Styling untuk kotak dialog */
+.dialog-box {
+  background-color: #2c2c2c; /* Warna gelap untuk tema Anda */
+  color: #f1f1f1;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+  width: 90%;
+  max-width: 400px; /* Lebar maksimum */
+
+  /* Transisi untuk efek zoom-in */
+  transform: scale(1);
+  transition: transform 0.2s ease;
+}
+
+/* Efek zoom-out saat dialog disembunyikan */
+.dialog-overlay.hidden .dialog-box {
+  transform: scale(0.9);
+}
+
+.dialog-title {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.25rem;
+}
+
+.dialog-message {
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.dialog-message u {
+  text-decoration-style: wavy;
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px; /* Jarak antar tombol */
+}
+
+/* Anda bisa sesuaikan styling tombol ini dengan tema Anda */
+.dialog-buttons .btn {
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.dialog-buttons .btn:active {
+  transform: scale(0.98);
+}
+
+.dialog-buttons .btn-secondary {
+  background-color: #555;
+  color: white;
+}
+.dialog-buttons .btn-secondary:hover {
+  background-color: #666;
+}
+
+.dialog-buttons .btn-danger {
+  background-color: #e53935;
+  color: white;
+}
+
+.dialog-buttons .btn-danger:hover {
+  background-color: #f44336;
+}
+
+/* Kontainer utama untuk bagian profil di footer sidebar */
+.user-profile-section {
+  flex-shrink: 0;
+  position: relative; /* Diperlukan agar menu-hover bisa diposisikan */
+  display: none; /* Sembunyi secara default, ditampilkan oleh JS saat login */
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  margin-top: auto; /* Mendorong elemen ini ke bawah */
+  border-top: 0px solid #e0e0e0;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.user-profile-section:hover {
+  background-color: #292929;
+}
+
+/* Foto profil pengguna */
+.profile-pic {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Nama pengguna */
+.profile-name {
+  flex-grow: 1; /* Mengisi ruang agar ikon titik tiga terdorong ke kanan */
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Ikon titik tiga */
+.profile-options-icon {
+  color: #5f6368;
+}
+
+/* Menu yang muncul saat hover */
+.profile-menu {
+  position: absolute;
+  bottom: calc(100% + 8px); /* Muncul di atas elemen profil */
+  left: 8px;
+  width: calc(100% - 16px);
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 8px 0;
+  z-index: 1000;
+
+  /* Sembunyikan secara default untuk animasi */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+/* Tampilkan menu saat .user-profile-section di-hover */
+.user-profile-section:hover .profile-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Item di dalam menu (tombol pengaturan & logout) */
+.profile-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #3c4043;
+  text-decoration: none;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.profile-menu-item:hover {
+  background-color: #f1f3f4;
+}
+
+.profile-menu-item .material-icons {
+  font-size: 20px;
+}
+
+.welcome-back-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Background lebih gelap */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1020; /* Pastikan di atas elemen lain */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.welcome-back-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.welcome-back-box {
+  background-color: #181818; /* Warna background gelap */
+  padding: 5px 30px 25px 30px; /* Padding disesuaikan */
+  border-radius: 12px; /* Sudut sedikit membulat */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  width: 70%;
+  max-width: 400px; /* Lebar maksimum disesuaikan */
+  text-align: center;
+  transform: translateY(-20px);
+  transition: transform 0.3s ease;
+  color: #e0e0e0; /* Warna teks default */
+}
+
+.welcome-back-overlay.visible .welcome-back-box {
+  transform: translateY(0);
+}
+
+.welcome-back-header h2 {
+  font-size: 28px; /* Ukuran font judul */
+  margin-bottom: 15px;
+  color: #ffffff; /* Warna judul putih */
+  font-weight: 500; /* Ketebalan font */
+}
+
+.welcome-back-header p {
+  font-size: 16px; /* Ukuran font deskripsi */
+  color: #b0b0b0; /* Warna deskripsi abu-abu */
+  margin-bottom: 35px; /* Jarak dengan tombol */
+  line-height: 1.5;
+  padding: 0 10px; /* Sedikit padding samping untuk teks */
+}
+
+.welcome-back-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Jarak antar tombol */
+}
+
+/* Tombol Utama (Masuk) */
+.btn-primary-dark {
+  width: 100%;
+  padding: 14px 25px;
+  background-color: #e0e0e0; /* Warna terang untuk tombol utama */
+  color: #1a1a1a; /* Warna teks gelap */
+  border: none;
+  border-radius: 25px; /* Lebih membulat */
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-primary-dark:hover {
+  background-color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.btn-primary-dark:active {
+  transform: translateY(0);
+}
+
+/* Tombol Sekunder (Daftar gratis) */
+.btn-secondary-dark {
+  width: 100%;
+  padding: 14px 25px;
+  background-color: #3e3f41; /* Warna abu-abu gelap */
+  color: #e0e0e0; /* Warna teks terang */
+  border: 1px solid #505050; /* Border tipis */
+  border-radius: 25px; /* Lebih membulat */
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease, border-color 0.2s ease;
+}
+
+.btn-secondary-dark:hover {
+  background-color: #4a4b4d;
+  border-color: #606060;
+  transform: translateY(-1px);
+}
+
+.btn-secondary-dark:active {
+  transform: translateY(0);
+}
+
+/* Tombol Teks (Tetap keluar) */
+.btn-text-dark {
+  background: none;
+  border: none;
+  color: #b0b0b0; /* Warna teks abu-abu */
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 5px; /* Jarak dari tombol di atasnya */
+  transition: color 0.2s ease;
+}
+
+.btn-text-dark:hover {
+  color: #ffffff;
+}
+
+/* Pastikan class 'hidden' tetap ada di styles.css Anda */
+.hidden {
+  display: none !important;
+}
+
+/* Login/Register */
+.auth-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 15px;
+}
+
+/* Tombol login & register - stylish */
+.auth-buttons button {
+  background: linear-gradient(135deg, #444, #222);
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border-radius: 9999px; /* full rounded */
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.auth-buttons button:hover {
+  background: linear-gradient(135deg, #666, #333);
+  transform: translateY(-2px);
+}
+
+.help-center-btn {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px; /* Jarak antara ikon dan teks */
+  width: 100%;
+  background-color: transparent;
+  border: 0px solid #444;
+  color: #e0e0e0;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  border-radius: 90px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.help-center-btn:hover {
+  background-color: rgba(153, 153, 153, 0.2);
+}
+
+.help-center-btn .icon {
+  font-size: 18px;
+  width: 33px;
+  height: 33px;
+  margin-right: 12px;
+  margin-left: 4px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-image-sidebar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-name {
+  font-size: 16px;
+  margin-left: 4px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* Styling untuk blok kode */
+pre {
+  background-color: #1e1e1e; /* background gelap */
+  color: #d4d4d4; /* warna teks terang */
+  padding: 12px 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: "Fira Code", monospace, monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 12px 0;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.2);
+}
+
+/* Styling kode inline */
+code.inline-code {
+  background-color: #f5f5f5;
+  color: #c7254e;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: "Fira Code", monospace, monospace;
+  font-size: 13px;
+  margin: 0px;
+}
+
+/* Toolbar copy dan label kode (kalau kamu pakai toolbar di kode) */
+.code-toolbar {
+  background-color: #f3f4f6;
+  border-bottom: 1px solid #ddd;
+  padding: 6px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: sans-serif;
+  color: #374151;
+  margin-bottom: 4px;
+}
+
+.code-wrapper {
+  margin-bottom: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  body {
+    font-family: "Inter", system-ui, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #e0e0e0; /* Light text */
+    height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Supaya sidebar fleksibel dan footer tetap paling bawah */
+
+  .chat-container {
+    height: calc(100vh - 50px); /* Pastikan tinggi sesuai */
+  }
+  .chat-header {
+    display: none; /* sembunyikan header chat di mobile */
+  }
+
+  .navbar {
+    display: flex;
+  }
+
+  .navbar div {
+    font-weight: 700;
+    font-size: 1.2em;
+  }
+  .navbar .trash {
+    filter: invert(1);
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    transition: filter 0.2s ease;
+  }
+
+  .navbar .trash:hover {
+    filter: invert(1) brightness(0.8);
+  }
+
+  /* [✅ PERBAIKAN] Aturan CSS untuk .chat-box */
+  .chat-box {
+    /* Properti ini benar dan harus dipertahankan */
+    flex-grow: 1;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+
+    /* [✅ PERBAIKAN] Atur padding kiri-kanan agar lebih pas di mobile */
+    padding-left: 15px;
+    padding-right: 15px;
+
+    /* [❌ DIHAPUS] Properti ini menyebabkan masalah layout, jadi kita hapus dari sini */
+    /* width: 94%; */
+    /* max-width: 700px; */
+    /* margin: 0 auto; */
+  }
+
+  .copy-btn {
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin-top: 4px;
+    margin-left: 4px;
+    transition: color 0.3s;
+    display: flex;
+    align-items: flex-start;
+  }
+  .copy-btn:hover {
+    color: #fff;
+  }
+
+  .container {
+    flex-direction: column;
+    height: calc(100vh - 50px);
+  }
+
+  /* Sidebar geser dan overlay */
+  /* Letakkan atau perbarui kode ini di dalam blok @media (max-width: 768px) { ... } */
+
+  /* Ganti aturan .sidebar Anda di dalam @media (max-width: 768px) dengan ini */
+  .sidebar {
+    /* Aturan yang sudah ada untuk posisi & animasi */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    width: 280px; /* Lebar bisa disesuaikan */
+
+    /* ================================================= */
+    /* === INI ADALAH KUNCI YANG HILANG (TAMBAHKAN) === */
+    display: flex;
+    flex-direction: column;
+    /* ================================================= */
+
+    /* Aturan tinggi & styling */
+    height: 100dvh; /* Gunakan dvh untuk mobile */
+    background-color: #121212;
+    padding: 8px;
+    box-sizing: border-box; /* Penting! */
+    overflow: hidden; /* Mencegah scrollbar ganda */
+  }
+
+  .sidebar.active {
+    /* Memunculkan sidebar ke dalam layar saat class 'active' ditambahkan */
+    transform: translateX(0);
+  }
+
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1500; /* Di bawah sidebar, tapi di atas konten lain */
+
+    /* Efek transisi untuk overlay */
+    background-color: rgba(0, 0, 0, 0.5); /* Latar belakang gelap transparan */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .sidebar-overlay.active {
+    /* Memunculkan overlay saat sidebar aktif */
+    opacity: 1;
+    pointer-events: all; /* Agar bisa diklik untuk menutup sidebar */
+  }
+
+  .chat-container {
+    height: calc(100vh - 50px);
+  }
+
+  .chat-box {
+    flex-grow: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 15px 10px;
+    box-sizing: border-box;
+  }
+
+  .message-content {
+    max-width: 80%;
+  }
+
+  .message {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  .input-container {
+    padding: 2px 6px;
+    margin-bottom: 30px;
+  }
+
+  .input-container textarea {
+    font-size: 16px;
+    padding: 4px 10px;
+    min-height: 40px;
+    max-height: 100px;
+  }
+
+  .input-container button {
+    padding: 4px;
+    margin-left: 8px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+
+  .input-container button:hover {
+    background-color: #ffffff;
+  }
+
+  /* Kontainer utama untuk bagian profil di footer sidebar */
+  /* ======================================================= */
+  /* === PERBAIKAN LAYOUT PROFIL PENGGUNA (HORIZONTAL) === */
+  /* ======================================================= */
+
+  /* Pastikan kode untuk profil Anda seperti ini (kode Anda sudah bagus) */
+  .user-profile-section {
+    display: flex;
+    flex-direction: row; /* !important tidak diperlukan jika struktur benar */
+    align-items: center;
+    gap: 12px;
+    padding: 12px 10px;
+    border-top: 1px solid #3a3a3a;
+    width: 100%;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .profile-pic {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .profile-name {
+    flex-grow: 1;
+    font-size: 14px;
+    font-weight: 500;
+    color: #e8eaed;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .profile-options-icon {
+    color: #bdc1c6;
+    flex-shrink: 0;
+    padding: 4px;
+  }
+
+  /* Ikon titik tiga */
+  .profile-options-icon {
+    color: #5f6368;
+  }
+
+  /* Menu yang muncul saat hover */
+  .profile-menu {
+    position: absolute;
+    bottom: calc(100% + 8px); /* Muncul di atas elemen profil */
+    left: 8px;
+    width: calc(100% - 16px);
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px 0;
+    z-index: 1000;
+
+    /* Sembunyikan secara default untuk animasi */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  }
+
+  /* Tampilkan menu saat .user-profile-section di-hover */
+  .user-profile-section:hover .profile-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  /* Item di dalam menu (tombol pengaturan & logout) */
+  .profile-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    font-size: 14px;
+    color: #3c4043;
+    text-decoration: none;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .profile-menu-item:hover {
+    background-color: #f1f3f4;
+  }
+
+  .profile-menu-item .material-icons {
+    font-size: 20px;
+  }
+
+  /* Kontainer utama untuk bagian profil di footer sidebar */
+  .user-profile-section {
+    flex-shrink: 0;
+    position: relative; /* Diperlukan agar menu-hover bisa diposisikan */
+    display: none; /* Sembunyi secara default, ditampilkan oleh JS saat login */
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    margin-top: auto; /* Mendorong elemen ini ke bawah */
+    border-top: 0px solid #e0e0e0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .user-profile-section:hover {
+    background-color: #292929;
+  }
+
+  /* Foto profil pengguna */
+  .profile-pic {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  /* Nama pengguna */
+  .profile-name {
+    flex-grow: 1; /* Mengisi ruang agar ikon titik tiga terdorong ke kanan */
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Ikon titik tiga */
+  .profile-options-icon {
+    color: #5f6368;
+  }
+
+  /* Menu yang muncul saat hover */
+  .profile-menu {
+    position: absolute;
+    bottom: calc(100% + 8px); /* Muncul di atas elemen profil */
+    left: 8px;
+    width: calc(100% - 16px);
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px 0;
+    z-index: 1000;
+
+    /* Sembunyikan secara default untuk animasi */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  }
+
+  /* Tampilkan menu saat .user-profile-section di-hover */
+  .user-profile-section:hover .profile-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  /* Menu yang muncul (styling dasar) */
+  .profile-menu {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 8px;
+    width: calc(100% - 16px);
+    background-color: #3c3c3c; /* Warna lebih gelap agar kontras */
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    padding: 8px 0;
+    z-index: 1000;
+
+    /* Sembunyikan secara default untuk animasi */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  }
+
+  /* Item di dalam menu (tombol pengaturan & logout) */
+  .profile-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    font-size: 14px;
+    color: #e0e0e0; /* Teks terang */
+    text-decoration: none;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .profile-menu-item:hover {
+    background-color: #505050;
+  }
+
+  .profile-menu-item .material-icons {
+    font-size: 20px;
+    color: #c7c7c7;
+  }
+
+  /* ============================================= */
+  /* KONDISI UNTUK MENAMPILKAN MENU */
+  /* ============================================= */
+
+  /* 1. Tampilkan menu saat di-HOVER (untuk pengguna DESKTOP) */
+  .user-profile-section:hover .profile-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  /* 2. Tampilkan menu saat memiliki class .visible (untuk KLIK di mobile/desktop) */
+  .profile-menu.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .mobile-profile-btn {
+    display: block !important; /* Tambahkan !important HANYA UNTUK TES */
+  }
+}
